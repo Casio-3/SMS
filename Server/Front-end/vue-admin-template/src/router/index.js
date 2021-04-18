@@ -51,7 +51,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '控制面板', icon: 'dashboard' }
+      meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
 
@@ -60,25 +60,25 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/student/table',
     name: 'Student info',
-    meta: { title: '学生信息管理', icon: 'student' },
+    meta: { title: 'Students', icon: 'student' },
     children: [
       {
-        path: 'view',
-        name: 'View',
-        component: () => import('@/views/student/view'),
-        meta: { title: '查看', icon: 'table' }
+        path: 'list',
+        name: 'List',
+        component: () => import('@/views/student/list'),
+        meta: { title: 'View', icon: 'table' }
       },
       {
         path: 'add',
         name: 'Add',
         component: () => import('@/views/student/add'),
-        meta: { title: '添加', icon: 'student' }
+        meta: { title: 'Add', icon: 'tree' }
       },
       {
-        path: 'query',
-        name: 'Query',
-        component: () => import('@/views/student/query'),
-        meta: { title: '查询', icon: 'query' }
+        path: 'search',
+        name: 'Search',
+        component: () => import('@/views/student/search'),
+        meta: { title: 'Search', icon: 'search' }
       }
     ]
   },
@@ -88,23 +88,72 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/teacher/table',
     name: 'Teacher info',
-    meta: { title: '教师信息管理', icon: 'teacher' },
+    meta: { title: 'Teachers', icon: 'teacher' },
     children: [
       {
-        path: 'view',
-        name: 'View',
-        component: () => import('@/views/teacher/view'),
-        meta: { title: '查看', icon: 'table' }
+          path: 'list',
+          name: 'List',
+          component: () => import('@/views/teacher/list'),
+          meta: { title: 'View', icon: 'table' }
       },
       {
         path: 'add',
         name: 'Add',
         component: () => import('@/views/teacher/add'),
-        meta: { title: '添加', icon: 'teacher' }
+        meta: { title: 'Add', icon: 'tree' }
+      },
+      {
+        path: 'search',
+        name: 'Search',
+        component: () => import('@/views/teacher/search'),
+        meta: { title: 'Search', icon: 'search' }
       }
     ]
   },
 
+  {
+    path: '/class',
+    component: Layout,
+    redirect: '/class/table2',
+    name: 'Example',
+    meta: { title: 'Classes', icon: 'fly' },
+    children: [
+      {
+        path: 'list',
+        name: 'Table',
+        component: () => import('@/views/clazz/list'),
+        meta: { title: 'View', icon: 'table' }
+      },
+      {
+        path: 'add',
+        name: 'Tree',
+        component: () => import('@/views/clazz/add'),
+        meta: { title: 'Add', icon: 'tree' }
+      }
+    ]
+  },
+
+  {
+    path: '/form',
+    component: Layout,
+    redirect: '/user/',
+    name: 'Example',
+    meta: { title: 'Profile', icon: 'user' },
+    children: [
+      {
+        path: 'index',
+        name: 'Form',
+        component: () => import('@/views/user/update'),
+        meta: { title: 'Change info', icon: 'tree' }
+      },
+      {
+        path: 'add',
+        name: 'Tree',
+        component: () => import('@/views/user/updatePassword'),
+        meta: { title: 'Change password', icon: 'tree' }
+      }
+    ]
+  },
   //   {
   //     path: '/form',
   //     component: Layout,
