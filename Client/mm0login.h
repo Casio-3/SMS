@@ -1,7 +1,7 @@
 #ifndef MM0LOGIN_H
 #define MM0LOGIN_H
 
-#include <QDialog>
+#include <QWidget>
 #include <QJsonArray>
 #include <QMessageBox>
 #include <QCloseEvent>
@@ -11,7 +11,7 @@ namespace Ui {
 class mm0login;
 }
 
-class mm0login : public QDialog
+class mm0login : public QWidget
 {
     Q_OBJECT
 
@@ -25,7 +25,7 @@ private slots:
 
 private:
     Ui::mm0login *ui;
-    mm0register *dlgReg;
+
 };
 
 #endif // MM0LOGIN_H
