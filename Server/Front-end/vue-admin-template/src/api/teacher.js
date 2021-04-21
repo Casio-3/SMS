@@ -1,41 +1,38 @@
 import request from '@/utils/request'
 
-export function listTeacher(){
+export function listTeacher() {
   return request({
-    url: '/teacher/list',
+    url: '/api/teacher/list',
     method: 'get'
   })
 }
 
-
-export function addTeacher(data){
+export function addTeacher(data) {
   return request({
-    url: '/teacher/add',
+    url: '/api/teacher/add',
     method: 'post',
     data
   })
 }
 
-
-export function updateTeacher(data){
+export function updateTeacher(data) {
   return request({
-    url: '/teacher/update',
+    url: '/api/teacher/update',
     method: 'post',
     data
   })
 }
 
-
-export function deleteTeacher(id){
+export function deleteTeacher(id) {
   return request({
-    url: '/teacher/delete/' + id,
+    url: '/api/teacher/delete/' + id,
     method: 'post'
   })
 }
 
-export function searchTeacher(data){
+export function searchTeacher(data) {
   return request({
-    url: '/teacher/search',
+    url: '/api/teacher/search',
     method: 'post',
     data
   })

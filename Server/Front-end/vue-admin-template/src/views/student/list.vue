@@ -1,116 +1,112 @@
 <template>
-<div class="">
-  <el-table
-      :data="tableData"
+  <div class="app-container">
+    <el-table
+      v-loading="listLoading"
+      :data="list"
+      element-loading-text="Loading"
       border
-      style="width: 100%">
-      <el-table-column
-        label="序号"
-        width=""
-        align="center">
-          <template slot-scope="scope">
-            {{ scope.row.id }}
-          </template>
-      </el-table-column>
-      <el-table-column
-        label="学号"
-        width=""
-        align="center">
-          <template slot-scope="scope">
-            {{ scope.row.num }}
-          </el-popover>
+      fit
+      highlight-current-row
+    >
+      <el-table-column label="ID" align="center" width="50">
+        <template slot-scope="scope">
+          {{ scope.$index }}
         </template>
       </el-table-column>
-      <el-table-column
-        label="姓名"
-        width=""
-        align="center">
-          <template slot-scope="scope">
-            {{ scope.row.name }}
-          </el-popover>
+      <el-table-column label="学号" width="150">
+        <template slot-scope="scope">
+          {{ scope.row.member }}
         </template>
       </el-table-column>
-      <el-table-column
-        label="年龄"
-        width=""
-        align="center">
-          <template slot-scope="scope">
-            {{ scope.row.age }}
-          </el-popover>
+      <el-table-column label="姓名" align="center" width="100">
+        <template slot-scope="scope">
+          <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="性别"
-        width=""
-        align="center">
-          <template slot-scope="scope">
-            {{ scope.row.sex|convertSex }}
-          </el-popover>
+      <el-table-column label="年龄" align="center" width="75">
+        <template slot-scope="scope">
+          {{ scope.row.age }}
         </template>
       </el-table-column>
-      <el-table-column
-        label="年级"
-        width=""
-        align="center">
-          <template slot-scope="scope">
-            {{ scope.row.grade }}
-          </el-popover>
+      <el-table-column label="性别" width="75">
+        <template slot-scope="scope">
+          {{ scope.row.gender|convertSex }}
         </template>
       </el-table-column>
-      <el-table-column
-        label="班级"
-        width=""
-        align="center">
-          <template slot-scope="scope">
-            {{ scope.row.clazz }}
-          </el-popover>
+      <el-table-column label="年级" width="75">
+        <template slot-scope="scope">
+          {{ scope.row.grade }}
         </template>
       </el-table-column>
-      <el-table-column
-        label="家庭住址"
-        width=""
-        align="center">
-          <template slot-scope="scope">
-            {{ scope.row.address }}
-          </el-popover>
+      <el-table-column label="班级" width="75">
+        <template slot-scope="scope">
+          {{ scope.row.clazz }}
         </template>
       </el-table-column>
-      <el-table-column
+      <el-table-column align="center" prop="created_at" label="地址" width="">
+        <template slot-scope="scope">
+          <i class="el-icon-s-home" />
+          <span>{{ scope.row.homeaddress }}</span>
+        </template>
+      </el-table-column>
+      <!-- <el-table-column
+        fixed="right"
         label="操作"
-        align="center">
+        width="150">
         <template slot-scope="scope">
           <el-button
-            size="mini"
-            type="primary"
-            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          @click="handleEdit(scope.$index, scope.row)"
+          type="primary"
+          size="mini">编辑</el-button>
           <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          @click="handleDelete(scope.$index, scope.row)"
+          type="danger"
+          size="mini">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table> -->
+      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+        <template slot-scope="{row,$index}">
+          <el-button type="primary" size="mini" @click="handleEdit(row,$index)">
+            编辑
+          </el-button>
+          <el-button type="danger" size="mini" @click="handleDelete(row,$index)">
+            删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <el-dialog title="编辑学生信息" :visible.sync="dialogFormVisible">
+    <el-dialog
+      title="Edit"
+      :visible.sync="dialogFormVisible"
+      width="30%"
+      :before-close="handleClose"
+    >
       <el-form :model="form">
-        <el-input v-model="form.index" autocomplete="off" v-show="false"></el-input>
-        <el-input v-model="form.id" autocomplete="off" v-show="false"></el-input>
+        <el-input v-show="false" v-model="form.id" autocomplete="off" />
         <el-form-item label="学号" :label-width="formLabelWidth">
-          <el-input v-model="form.num" autocomplete="off"></el-input>
+          <el-input v-model="form.member" autocomplete="off" />
         </el-form-item>
         <el-form-item label="姓名" :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="off"></el-input>
+          <el-input v-model="form.name" autocomplete="off" />
         </el-form-item>
         <el-form-item label="年龄" :label-width="formLabelWidth">
-          <el-input v-model="form.age" autocomplete="off"></el-input>
+          <el-input v-model="form.age" autocomplete="off" />
         </el-form-item>
         <el-form-item label="性别" :label-width="formLabelWidth">
-          <el-radio-group v-model="formsex">
+          <el-radio-group v-model="formgender">
             <el-radio :label="1">男</el-radio>
             <el-radio :label="0">女</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="年级" :label-width="formLabelWidth">
+          <el-input v-model="form.grade" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="班级" :label-width="formLabelWidth">
+          <el-input v-model="form.clazz" autocomplete="off" />
+        </el-form-item>
+        <!--         <el-form-item label="年级" :label-width="formLabelWidth">
           <el-select v-model="formGrade" placeholder="请选择年级">
             <el-option :label = item :value=item v-for="(item, i) in gradeList"></el-option>
           </el-select>
@@ -119,9 +115,9 @@
           <el-select v-model="form.clazz" placeholder="请选择班级">
             <el-option :label=item :value=item v-for="(item, i) in clazzList"></el-option>
           </el-select>
-        </el-form-item>
-        <el-form-item label="家庭住址" :label-width="formLabelWidth">
-          <el-input v-model="form.address" autocomplete="off"></el-input>
+        </el-form-item> -->
+        <el-form-item label="地址" :label-width="formLabelWidth">
+          <el-input v-model="form.homeaddress" autocomplete="off" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -129,175 +125,145 @@
         <el-button type="primary" @click="handleUpdateStudent()">确 定</el-button>
       </div>
     </el-dialog>
-</div>
+  </div>
 </template>
 
-
-
-
-<script type="text/javascript">
-import { getGrades, getClazzs } from '@/api/clazz';
-import { listStudent, updateStudent, deleteStudent } from '@/api/student';
+<script>
+import { listStudent, deleteStudent, updateStudent } from '@/api/student'
 
 export default {
-  data () {
-    return {
-      formLabelWidth:'',
-      dialogFormVisible: false,
-      clazzVisible: false,
-      tableData: [],
-      gradeList:[],
-      clazzList: [],
-      formGrade:'',
-      formsex: 1,
-      form: {
-        index: '',
-        id: '',
-        num: '',
-        name: '',
-        age: '',
-        clazz: '',
-        address: ''
+  filters: {
+    convertSex(sex) {
+      switch (sex) {
+        case 1:
+          return '男'
+        case 0:
+          return '女'
       }
     }
   },
-  methods: {
-      handleEdit(index, row) {
-        this.form.index = index;
-        this.form.id = row.id
-        this.form.age = row.age
-        this.formsex = row.sex
-        this.form.num = row.num
-        this.form.name = row.name
-        this.form.clazz = row.clazz
-        this.form.address = row.address
-        getGrades().then(
-          response => {
-            this.gradeList = response.data
-          }
-        )
-        this.formsex = row.sex
-        this.formGrade = row.grade
-        this.dialogFormVisible = true;
-
+  data() {
+    return {
+      dialogFormVisible: false,
+      formLabelWidth: '',
+      formgender: '',
+      form: {
+        id: '',
+        member: '',
+        name: '',
+        age: '',
+        gender: '',
+        grade: '',
+        clazz: '',
+        homeaddress: ''
       },
-      handleDelete(index, row) {
-        //删除记录
-        var id = row.id;
-        this.$confirm('此操作将永久删除该条数据, 是否继续?', '警告', {
+      list: null,
+      listLoading: true
+    }
+  },
+  created() {
+    this.fetchData()
+  },
+  methods: {
+    fetchData() {
+      this.listLoading = true
+      listStudent().then(response => {
+        this.list = response.data.items
+        this.listLoading = false
+      })
+    },
+
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done()
+        })
+        .catch(_ => {})
+    },
+
+    handleEdit(row, index) {
+      this.form.index = index
+      this.form.member = row.member
+      this.form.name = row.name
+      this.form.age = row.age
+      this.formgender = row.gender
+      this.form.grade = row.grade
+      this.form.clazz = row.clazz
+      this.form.homeaddress = row.homeaddress
+
+      this.dialogFormVisible = true
+    },
+
+    handleDelete(row, index) {
+      // 删除记录
+      var id = row.id
+      this.$confirm('此操作将永久删除该条数据, 是否继续?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-        }).then(() => {
-          deleteStudent(id).then(
-            response => {
-              this.tableData.splice(index, 1);
-              this.$message({
-                  message: response.message,
-                  type: 'success'
-                });
-            }
-          )
-         }).catch(() => {
-           this.$message({
-             type: 'info',
-             message: '已取消删除'
-           });
-         });
-
-      },
-      handleUpdateStudent(){
-        var id = this.form.id;
-        var age = this.form.age;
-        var sex = this.formsex;
-        var num = this.form.num;
-        var name = this.form.name;
-        var grade = this.formGrade;
-        var clazz = this.form.clazz;
-        var address = this.form.address;
-        if(null === id || "" === id ||
-        null === age || "" === age ||
-        null === sex || "" === sex ||
-        null === num || "" === num ||
-        null === name || "" === name ||
-        null === grade || "" === grade ||
-        null === clazz || "" === clazz ||
-        null === address || "" === address){
-          this.$message({
-            message: "请填写完整的信息",
-            type: "error"
-          })
-        }else{
-          //请求后台
-          var data = {
-            id: id,
-            age: age,
-            sex: sex,
-            num: num,
-            name: name,
-            grade: grade,
-            clazz: clazz,
-            address: address,
+      }).then(() => {
+        deleteStudent(id).then(
+          response => {
+            this.tableData.splice(index, 1)
+            this.$message({
+              message: response.message,
+              type: 'success'
+            })
           }
-          updateStudent(data).then(
-            //更新页面数据
+        )
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
 
-            response => {
-              // var i = this.form.index;
-              // this.tableData[i].age = age;
-              // this.tableData[i].sex = sex;
-              // this.tableData[i].num = num;
-              // this.tableData[i].name = name;
-              // this.tableData[i].grade = grade;
-              // this.tableData[i].clazz = clazz;
-              // this.tableData[i].address = address;
-              // this.dialogFormVisible = false;
-              this.dialogFormVisible = false;
-              this.loadData()
-              this.$message({
-                message: response.message,
-                type: "success"
-              })
-            }
-          )
+    handleUpdateStudent() {
+      var id = this.form.id
+      var member = this.form.member
+      var name = this.form.name
+      var age = this.form.age
+      var gender = this.formgender
+      var grade = this.form.grade
+      var clazz = this.form.clazz
+      var homeaddress = this.form.homeaddress
+      if (
+        member === null || member === '' ||
+        name === null || name === '' ||
+        age === null || age === '' ||
+        gender === null || gender === '' ||
+        grade === null || grade === '' ||
+        clazz === null || clazz === '' ||
+        homeaddress === null || homeaddress === '') {
+        this.$message({
+          message: '请填写完整的信息',
+          type: 'error'
+        })
+      } else {
+        // 请求后台
+        var data = {
+          id: id,
+          member: member,
+          name: name,
+          age: age,
+          gender: gender,
+          grade: grade,
+          clazz: clazz,
+          homeaddress: homeaddress
         }
-      },
-      loadData(){
-        listStudent().then(
-          response=>{
-            this.tableData = response.data;
+        updateStudent(data).then(
+          // 更新页面数据
+          response => {
+            this.dialogFormVisible = false
+            this.loadData()
+            this.$message({
+              message: response.message,
+              type: 'success'
+            })
           }
         )
       }
-  },
-  mounted: function(){
-    this.loadData()
-  },
-  filters: {
-    convertSex(sex){
-      switch(sex){
-        case 1:
-          return "男"
-          break
-        case 0:
-          return "女"
-          break
-      }
-    }
-  },
-  watch: {
-    formGrade: {
-      handler: function(newVal, oldVal){
-        if(newVal != oldVal){
-          getClazzs(newVal).then(
-            response => {
-              this.clazzList = response.data
-            }
-          )
-          this.clazzVisible = true
-        }
-      },
-      deep: true
     }
   }
 }

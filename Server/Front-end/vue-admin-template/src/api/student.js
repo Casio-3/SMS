@@ -1,37 +1,39 @@
 import request from '@/utils/request'
 
-export function listStudent(){
+export function listStudent(params) {
   return request({
-    url: '/student/list',
-    method: 'get'
+    url: '/api/student/list',
+    method: 'get',
+    params
   })
 }
-export function addStudent(data){
+
+export function addStudent(data) {
   return request({
-    url: '/student/add',
+    url: '/api/student/add',
     method: 'post',
     data
   })
 }
 
-export function updateStudent(data){
+export function updateStudent(data) {
   return request({
-    url: '/student/update',
+    url: '/api/student/update',
     method: 'post',
     data
   })
 }
 
-export function deleteStudent(id){
+export function deleteStudent(id) {
   return request({
-    url: '/student/delete/' + id,
+    url: '/api/student/delete/' + id,
     method: 'post'
   })
 }
 
-export function searchStudent(data){
+export function searchStudent(data) {
   return request({
-    url: '/student/search',
+    url: '/api/student/search',
     method: 'post',
     data
   })
