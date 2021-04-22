@@ -24,18 +24,17 @@ export function logout() {
 }
 
 export function updateUserInfo(data) {
-    return request({
-      url: '/api/user/info/update',
-      method: 'post',
-      data
-    })
-  }
-  
-  export function updateUserPassword(data) {
-    return request({
-      url: '/api/user/info/updatePassword',
-      method: 'post',
-      data
-    })
-  }
-  
+  return request({
+    url: '/api/user/info/update',
+    method: 'post',
+    data
+  })
+}
+
+export function updateUserPassword(data) {
+  return request({
+    url: '/api/user/info/updatePassword',
+    method: 'post',
+    data
+  })
+}

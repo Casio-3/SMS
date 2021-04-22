@@ -49,22 +49,6 @@
           <span>{{ scope.row.homeaddress }}</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column
-        fixed="right"
-        label="操作"
-        width="150">
-        <template slot-scope="scope">
-          <el-button
-          @click="handleEdit(scope.$index, scope.row)"
-          type="primary"
-          size="mini">编辑</el-button>
-          <el-button
-          @click="handleDelete(scope.$index, scope.row)"
-          type="danger"
-          size="mini">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table> -->
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleEdit(row,$index)">
@@ -204,7 +188,7 @@ export default {
       }).then(() => {
         deleteStudent(id).then(
           response => {
-            this.tableData.splice(index, 1)
+            this.list.splice(index, 1)
             this.$message({
               message: response.message,
               type: 'success'
@@ -256,7 +240,7 @@ export default {
           // 更新页面数据
           response => {
             this.dialogFormVisible = false
-            this.loadData()
+            this.fetchData()
             this.$message({
               message: response.message,
               type: 'success'
