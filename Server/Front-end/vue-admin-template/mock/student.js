@@ -8,14 +8,14 @@ const data = Mock.mock({
     // author: 'name',
     // display_time: '@datetime',
     // pageviews: '@integer(300, 5000)'
-    id: '@id',
-    member: '@integer(2020090900000,2020091300000)',
-    name: 'ikun',
-    age: '@integer(17,19)',
-    gender: '@integer(0,1)',
-    grade: '@integer(1,4)',
-    clazz: '@integer(1,22)',
-    homeaddress: '盲生，你发现了华点🥰'
+    'id|+1': 0,
+    'member': '@integer(2017090909001,2020091203030)',
+    'name': '@cname',
+    'age|18-22': 20,
+    'gender|1': [0, 1],
+    'grade|1': ['大一', '大二', '大三', '大四'],
+    'clazz': '@integer(1,22)',
+    'homeaddress': '@county(true)'
   }]
 })
 

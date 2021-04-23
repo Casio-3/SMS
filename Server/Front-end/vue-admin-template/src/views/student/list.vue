@@ -10,7 +10,7 @@
     >
       <el-table-column label="ID" align="center" width="50">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          {{ scope.row.id }}
         </template>
       </el-table-column>
       <el-table-column label="学号" width="150">
@@ -28,12 +28,12 @@
           {{ scope.row.age }}
         </template>
       </el-table-column>
-      <el-table-column label="性别" width="75">
+      <el-table-column label="性别" align="center" width="75">
         <template slot-scope="scope">
           {{ scope.row.gender|convertSex }}
         </template>
       </el-table-column>
-      <el-table-column label="年级" width="75">
+      <el-table-column label="年级" align="center" width="75">
         <template slot-scope="scope">
           {{ scope.row.grade }}
         </template>
@@ -43,9 +43,9 @@
           {{ scope.row.clazz }}
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="地址" width="">
+      <el-table-column label="地址" align="center" width="">
         <template slot-scope="scope">
-          <i class="el-icon-s-home" />
+          <em class="el-icon-s-home" />
           <span>{{ scope.row.homeaddress }}</span>
         </template>
       </el-table-column>
@@ -68,7 +68,9 @@
       :before-close="handleClose"
     >
       <el-form :model="form">
-        <el-input v-show="false" v-model="form.id" autocomplete="off" />
+        <el-form-item label="ID" :label-width="formLabelWidth">
+          <el-input v-model="form.id" autocomplete="off" />
+        </el-form-item>
         <el-form-item label="学号" :label-width="formLabelWidth">
           <el-input v-model="form.member" autocomplete="off" />
         </el-form-item>
@@ -79,7 +81,7 @@
           <el-input v-model="form.age" autocomplete="off" />
         </el-form-item>
         <el-form-item label="性别" :label-width="formLabelWidth">
-          <el-radio-group v-model="formgender">
+          <el-radio-group v-model="form.gender">
             <el-radio :label="1">男</el-radio>
             <el-radio :label="0">女</el-radio>
           </el-radio-group>
@@ -130,7 +132,6 @@ export default {
     return {
       dialogFormVisible: false,
       formLabelWidth: '',
-      formgender: '',
       form: {
         id: '',
         member: '',
@@ -166,11 +167,11 @@ export default {
     },
 
     handleEdit(row, index) {
-      this.form.index = index
+      this.form.id = row.id
       this.form.member = row.member
       this.form.name = row.name
       this.form.age = row.age
-      this.formgender = row.gender
+      this.form.gender = row.gender
       this.form.grade = row.grade
       this.form.clazz = row.clazz
       this.form.homeaddress = row.homeaddress
@@ -208,11 +209,12 @@ export default {
       var member = this.form.member
       var name = this.form.name
       var age = this.form.age
-      var gender = this.formgender
+      var gender = this.form.gender
       var grade = this.form.grade
       var clazz = this.form.clazz
       var homeaddress = this.form.homeaddress
       if (
+        id === null || id === '' ||
         member === null || member === '' ||
         name === null || name === '' ||
         age === null || age === '' ||
